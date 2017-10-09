@@ -1,10 +1,11 @@
 package com.huaban.analysis.jieba;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.*;
 
 import com.huaban.analysis.jieba.viterbi.FinalSeg;
 import jdk.internal.util.xml.impl.Input;
@@ -12,22 +13,54 @@ import jdk.internal.util.xml.impl.Input;
 
 public class JiebaSegmenter {
 
-    private static InputStream mainStream = null;
-    private static InputStream userStream = null;
-    private static InputStream emitStream = null;
-
-    private static WordDictionary wordDict = WordDictionary.getInstance(mainStream, userStream);
-    private static FinalSeg finalSeg = FinalSeg.getInstance(emitStream);
-
+    private  InputStream mainStream = null;
+    private  InputStream userStream = null;
+    private  InputStream emitStream = null;
+    private  InputStream stopStream = null;
+    private static WordDictionary wordDict = null;
+    private static FinalSeg finalSeg = null;
+    private List<String> stopWords = null;
     public static enum SegMode {
         INDEX,
         SEARCH
     }
 
-    public JiebaSegmenter(InputStream mainDictStream, InputStream userDictStream, InputStream emitDefStream){
-        mainStream = mainDictStream;
-        userStream = userDictStream;
-        emitStream = emitDefStream;
+    public JiebaSegmenter(InputStream mainDictStream, InputStream userDictStream, InputStream emitDefStream, InputStream stopStream){
+        this.mainStream = mainDictStream;
+        this.userStream = userDictStream;
+        this.emitStream = emitDefStream;
+        this.stopStream = stopStream;
+        wordDict =  WordDictionary.getInstance(this.mainStream, this.userStream);
+        finalSeg = FinalSeg.getInstance(this.emitStream);
+        this.stopWords = loadStopWords(this.stopStream);
+    }
+
+    public List<String> loadStopWords(InputStream stopStream){
+        List<String> stopWords = new ArrayList<String>();
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(stopStream, Charset.forName("UTF-8")));
+
+            long s = System.currentTimeMillis();
+            while (br.ready()) {
+                String line = br.readLine();
+                stopWords.add(line.trim().toLowerCase());
+            }
+            System.out.println(String.format(Locale.getDefault(), "stop words dict load finished, time elapsed %d ms",
+                    System.currentTimeMillis() - s));
+        }
+        catch (IOException e) {
+            System.err.println(String.format(Locale.getDefault(), "%s load failure!"));
+        }
+        finally {
+            try {
+                if (null != stopStream)
+                    stopStream.close();
+            }
+            catch (IOException e) {
+                System.err.println(String.format(Locale.getDefault(), "%s close failure!"));
+            }
+        }
+        return stopWords;
     }
 
     private Map<Integer, List<Integer>> createDAG(String sentence) {
@@ -228,5 +261,9 @@ public class JiebaSegmenter {
 
         }
         return tokens;
+    }
+
+    public List<String> getStopWords(){
+        return stopWords;
     }
 }
