@@ -14,10 +14,10 @@ public class JiebaSearchSeg extends UDF {
     List<String> stopWords = null;
     public void setup(ExecutionContext ctx){
         try {
-            InputStream mainIns = ctx.readResourceFileAsStream("jieba_main.dict");
-            InputStream userIns = ctx.readResourceFileAsStream("jieba_user.dict");
-            InputStream emitIns = ctx.readResourceFileAsStream("jieba_prob_emit.txt");
-            InputStream stopIns = ctx.readResourceFileAsStream("jieba_stopwords.txt");
+            InputStream mainIns = ctx.readResourceFileAsStream("jieba_main.dict"); //读取内置主词典
+            InputStream userIns = ctx.readResourceFileAsStream("jieba_user.dict"); //读取用户词典
+            InputStream emitIns = ctx.readResourceFileAsStream("jieba_prob_emit.txt"); //发射概率，jieba内置，无需修改
+            InputStream stopIns = ctx.readResourceFileAsStream("jieba_stopwords.txt"); //自定义停止词
             jiebaSegmenter = new JiebaSegmenter(mainIns, userIns, emitIns, stopIns);
             stopWords = jiebaSegmenter.getStopWords();
             System.out.println("stopwords.size: " + stopWords.size());
@@ -29,10 +29,10 @@ public class JiebaSearchSeg extends UDF {
     public String evaluate(String s) {
         if(StringUtils.isEmpty(s))
             return null;
-        List<SegToken> tokenList = jiebaSegmenter.process(s, JiebaSegmenter.SegMode.SEARCH);
+        List<SegToken> tokenList = jiebaSegmenter.process(s, JiebaSegmenter.SegMode.SEARCH);//分词，分词模式为『搜索』
         List<String> wordList = new ArrayList<String>();
         for(SegToken token : tokenList) {
-            if(!stopWords.contains(token.word) && !StringTools.isMatchPunct(token.word))
+            if(!stopWords.contains(token.word) && !StringTools.isMatchPunct(token.word)) //过滤停止词和纯标点符号
                 wordList.add(token.word);
         }
         return Joiner.on("|").join(wordList);
