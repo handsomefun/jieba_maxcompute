@@ -2,8 +2,16 @@
 
 该版本是在jieba分词器基础上改写的。
 由于maxcompute的沙箱限制了所有文件读取操作，导致jieba分词器在maxcompute中执行的时候无法读取词典和配置文件。所以我简单的改写了jieba分词器读取资源的方式，把词典和配置文件都改为从maxcompute资源中读取。
-如果你打算使用改版本，只需要把配置文件作为资源上传到maxcompute中，同样，使用方法和API也需要做一些改变。
-以下是一个使用jieba分词的UDF示例示例：
+
+如果你打算使用该版本，只需要把配置文件作为资源上传到maxcompute中：
+```
+    odpscmd$> add file jieba_main.dict;
+    odpscmd$> add file jieba_user.dict;
+    odpscmd$> add file jieba_prob_emit.txt;
+    odpscmd$> add file jieba_stopwords.txt;
+```
+
+同样，使用方法和API也需要做一些改变。以下是一个使用jieba分词的UDF示例示例：
 
 -    Demo
 
