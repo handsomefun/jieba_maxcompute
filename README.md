@@ -29,8 +29,7 @@ public class JiebaSearchSeg extends UDF {
         List<SegToken> tokenList = jiebaSegmenter.process(s, JiebaSegmenter.SegMode.SEARCH);//分词，分词模式为『搜索』
         List<String> wordList = new ArrayList<String>();
         for(SegToken token : tokenList) {
-            if(!stopWords.contains(token.word) && !StringTools.isMatchPunct(token.word)) //过滤停止词和纯标点符号
-                wordList.add(token.word);
+             wordList.add(token.word);
         }
         return Joiner.on("|").join(wordList);
     }
