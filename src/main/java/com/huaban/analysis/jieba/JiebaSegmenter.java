@@ -25,6 +25,13 @@ public class JiebaSegmenter {
         SEARCH
     }
 
+    /**
+     *
+     * @param mainDictStream 默认词典
+     * @param userDictStream 用户自定义词典
+     * @param emitDefStream  发射概率文件，jieba内置
+     * @param stopStream 自定义停止词
+     */
     public JiebaSegmenter(InputStream mainDictStream, InputStream userDictStream, InputStream emitDefStream, InputStream stopStream){
         this.mainStream = mainDictStream;
         this.userStream = userDictStream;

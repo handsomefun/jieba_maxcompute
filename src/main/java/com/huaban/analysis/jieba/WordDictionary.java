@@ -28,6 +28,12 @@ public class WordDictionary {
     private WordDictionary() {
         this.loadDict();
     }
+
+    /**
+     *
+     * @param mainDictInputStream 默认词典资源
+     * @param userDictInputStream 用户自定义词典资源
+     */
     private WordDictionary(InputStream mainDictInputStream, InputStream userDictInputStream){
         mainIns = mainDictInputStream;
         userIns = userDictInputStream;
