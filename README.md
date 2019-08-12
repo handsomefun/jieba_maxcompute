@@ -5,6 +5,8 @@
 如果你打算使用改版本，只需要把配置文件作为资源上传到maxcompute中，同样，使用方法和API也需要做一些改变。
 以下是一个使用jieba分词的UDF示例示例：
 
+-    Demo
+
 ``` {.java}
 public class JiebaSearchSeg extends UDF {
     JiebaSegmenter jiebaSegmenter = null;
