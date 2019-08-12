@@ -11,7 +11,6 @@
     odpscmd$> add file jieba_prob_emit.txt;
     odpscmd$> add file jieba_stopwords.txt;
 ```
-
 同样，使用方法和API也需要做一些改变。以下是一个使用jieba分词的UDF示例示例：
 
 -    Demo
