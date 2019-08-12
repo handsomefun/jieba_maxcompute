@@ -6,12 +6,12 @@
         <artifactId>oss-parent</artifactId>
         <version>7</version>
     </parent>
-    <groupId>com.quvideo.data</groupId>
+    <groupId>club.aistudio.tools</groupId>
     <artifactId>jieba-analysis</artifactId>
     <version>1.0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>结巴分词工具(jieba for java)</name>
+    <name>jieba for java</name>
     <url>http://maven.apache.org</url>
     <inceptionYear>2013</inceptionYear>
 
