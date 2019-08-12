@@ -1,6 +1,7 @@
 ### 结巴分词器maxcompute版本
 
-该版本是在jieba分词器基础上改写的。
+
+该版本是在 [jieba分词器](https://github.com/huaban/jieba-analysis) 基础上改写的。
 由于maxcompute的沙箱限制了所有文件读取操作，导致jieba分词器在maxcompute中执行的时候无法读取词典和配置文件。所以我简单的改写了jieba分词器读取资源的方式，把词典和配置文件都改为从maxcompute资源中读取。
 
 如果你打算使用该版本，只需要把配置文件作为资源上传到maxcompute中：
