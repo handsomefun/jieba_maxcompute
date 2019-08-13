@@ -2,7 +2,7 @@
 
 
 该版本是在 [jieba分词器](https://github.com/huaban/jieba-analysis) 基础上改写的。
-由于maxcompute的沙箱限制了所有文件读取操作，导致jieba分词器在maxcompute中执行的时候无法读取词典和配置文件。所以我改写了jieba分词器读取资源的方式，把词典和配置文件都改为从maxcompute资源中读取。
+由于阿里云maxcompute的沙箱机制限制了所有文件读取操作，导致jieba分词器在maxcompute中执行的时候无法读取词典和配置文件。所以我改写了jieba分词器配置文件读取的方式，把词典和配置文件都改为从maxcompute资源中读取。
 
 使用该版本，只需要把配置文件作为资源上传到maxcompute中：
 ```
@@ -11,7 +11,7 @@
     odpscmd$> add file jieba_prob_emit.txt;
     odpscmd$> add file jieba_stopwords.txt;
 ```
-同样，使用方法和API也需要做一些改变。以下是一个使用jieba分词的UDF示例示例：
+同样，使用方法和API也需要做一些改变。以下是一个使用jieba分词的ODPS UDF示例示例：
 
 -    Demo
 
